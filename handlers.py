@@ -142,7 +142,7 @@ async def view_profile(message: Message, state: FSMContext):
                 f"🧓Возраст: {user_data['age']} лет.\n"
                 f"🌆Город: {user_data['city']}.\n"
                 f"🥐Цель калорий: {user_data['calorie_goal']} ккал.\n"
-                f"💧Цель воды: {user_data["water_goal"]} мл.\n"
+                f"💧Цель воды: {user_data['water_goal']} мл.\n"
             )
     except Exception as e:
         await message.reply(f"⚠️Произошла ошибка: {e}")
@@ -315,14 +315,14 @@ async def check_progress(message: Message, state: FSMContext):
         remaining_water = max(0, user_data["water_goal"] - current_logged)
         remaining_callories = max(0, user_data["logged_calories"] - user_data["burned_calories"])
         await message.reply(
-                f'📊 Прогресс:\n'
-                f'Вода:\n'
-                f'- Выпито: {user_data['logged_water']} мл из {user_data["water_goal"]} мл.\n'
-                f'- Осталось: {remaining_water} мл.\n'
-                f'Калории:\n'
-                f'- Потреблено: {user_data['logged_calories']} ккал из {user_data['calorie_goal']} ккал.\n'
-                f'- Сожжено: {user_data['burned_calories']} ккал.\n'
-                f'- Баланс: {remaining_callories} ккал.\n'
+                f"📊 Прогресс:\n"
+                f"Вода:\n"
+                f"- Выпито: {user_data['logged_water']} мл из {user_data['water_goal']} мл.\n"
+                f"- Осталось: {remaining_water} мл.\n"
+                f"Калории:\n"
+                f"- Потреблено: {user_data['logged_calories']} ккал из {user_data['calorie_goal']} ккал.\n"
+                f"- Сожжено: {user_data['burned_calories']} ккал.\n"
+                f"- Баланс: {remaining_callories} ккал.\n"
             )
     except Exception as e:
         await message.reply(f"⚠️Произошла ошибка: {e}")
