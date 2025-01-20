@@ -1,3 +1,6 @@
 aiogram==3.*
 aiohttp
 python-dotenv
+psycopg2-binary==2.9.7    
+matplotlib==3.7.2       
+requests==2.31.0         
