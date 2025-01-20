@@ -11,3 +11,6 @@ class Form(StatesGroup):
     logged_water = State()
     logged_calories = State()
     burned_calories = State()
+
+class FoodLogState(StatesGroup):
+    waiting_for_food_amount = State()
