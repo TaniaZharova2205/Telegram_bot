@@ -24,12 +24,11 @@ async def cmd_help(message: Message):
         "Доступные команды:\n"
         "/start - Начало работы\n"
         "/set_profile - Создание анкеты\n"
-        "/view_profile - Просмотр анкеты\n"
         "/log_water - Количество воды\n"
         "/log_food - Количество каллорий\n"
         "/log_workout - Тренировки\n"
         "/check_progress - Прогресс по воде и калориям\n"
-        "/progress_chart - График прогресса",
+        "/graph_progress - График прогресса",
     )
 
 # FSM: диалог с пользователем
@@ -119,33 +118,17 @@ async def process_calorie_goal(message: Message, state: FSMContext):
     try:
         await save_to_database(data_to_save)
         await message.reply(
-            f"Ваши данные успешно сохранены в базу данных!\n"
-            f"Цель калорий: {calorie_goal} ккал.\n"
+            f"Ваш профиль:\n"
+            f"⚖️Вес: {weight} кг.\n"
+            f"📈Рост: {height} см.\n"
+            f"🧓Возраст: {age} лет.\n"
+            f"🌆Город: {city}.\n"
+            f"🥐Цель калорий: {calorie_goal} ккал.\n"
+            f"💧Цель воды: {water_goal} мл.\n"
         )
     except Exception as e:
         await message.reply(f"⚠️Произошла ошибка при сохранении в базу данных: {e}")
     await state.clear()
-
-@router.message(Command("view_profile"))
-async def view_profile(message: Message, state: FSMContext):
-    try:
-        user_id = message.from_user.id
-        user_data = await get_user_data(user_id)
-
-        if not user_data:
-            await message.reply("Ваш профиль не найден. Используйте команду /set_profile для его создания.")
-            return
-        await message.reply(
-                f"Ваш профиль:\n"
-                f"⚖️Вес: {user_data['weight']} кг.\n"
-                f"📈Рост: {user_data['height']} см.\n"
-                f"🧓Возраст: {user_data['age']} лет.\n"
-                f"🌆Город: {user_data['city']}.\n"
-                f"🥐Цель калорий: {user_data['calorie_goal']} ккал.\n"
-                f"💧Цель воды: {user_data['water_goal']} мл.\n"
-            )
-    except Exception as e:
-        await message.reply(f"⚠️Произошла ошибка: {e}")
 
 @router.message(Command("log_water"))
 async def log_water(message: Message, state: FSMContext):
@@ -327,7 +310,7 @@ async def check_progress(message: Message, state: FSMContext):
     except Exception as e:
         await message.reply(f"⚠️Произошла ошибка: {e}")
 
-async def generate_progress_chart(user_id):
+async def generate_graph_progress(user_id):
     user_data = await get_user_data(user_id)
     if not user_data:
         return None
@@ -365,11 +348,11 @@ async def generate_progress_chart(user_id):
 
     return BufferedInputFile(buf.read(), filename='progress.png')
 
-@router.message(Command("progress_chart"))
-async def send_progress_chart(message: Message):
+@router.message(Command("graph_progress"))
+async def send_graph_progress(message: Message):
     try:
         user_id = message.from_user.id
-        chart = await generate_progress_chart(user_id)
+        chart = await generate_graph_progress(user_id)
 
         if chart:
             await message.answer_photo(chart, caption="📊 Ваш прогресс по воде и калориям.")
