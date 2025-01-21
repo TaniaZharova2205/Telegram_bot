@@ -44,6 +44,12 @@ VALUES
 
 ### 3. Деплой бота
 
+Логи бота
+
 ![5 картинка](https://github.com/TaniaZharova2205/Telegram_bot/blob/main/image/5.png)
 
 ![6 картинка](https://github.com/TaniaZharova2205/Telegram_bot/blob/main/image/6.png)
+
+Логи базы данных
+
+![7 картинка](https://github.com/TaniaZharova2205/Telegram_bot/blob/main/image/7.png)
